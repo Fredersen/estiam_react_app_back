@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const productRoutes = require('./routes/productRoutes');
+const featuredProductRoutes = require('./routes/featuredProductRoutes');
 const cors = require('cors');
 
 const hostname = '127.0.0.1';
@@ -28,6 +30,8 @@ app.use(express.json());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/featured-products', featuredProductRoutes);
 
 // Server
 app.listen(port, hostname, () => {
