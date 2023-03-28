@@ -1,7 +1,7 @@
 const Category = require('../models/categoryModel');
 
 exports.createCategory = async (req, res) => {
-    try {
+    try {toggleLogin
         const newCategory = await Category.create(req.body);
         res.status(201).json({ success: true, data: newCategory });
     } catch (error) {
