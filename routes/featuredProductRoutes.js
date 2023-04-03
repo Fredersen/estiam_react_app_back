@@ -1,12 +1,13 @@
 const express = require('express');
 const featuredProductController = require('../controllers/featuredProductController');
+const {protect, authorize} = require("../controllers/authController");
 
 const router = express.Router();
 
-router.post('/', featuredProductController.createFeaturedProduct);
-router.get('/', featuredProductController.getFeaturedProducts);
+router.post('/', protect, authorize('admin'), featuredProductController.createFeaturedProduct);
+router.get('/', protect, featuredProductController.getFeaturedProducts);
 router.get('/:id', featuredProductController.getFeaturedProduct);
-router.put('/:id', featuredProductController.updateFeaturedProduct);
-router.delete('/:id', featuredProductController.deleteFeaturedProduct);
+router.put('/:id', protect, authorize('admin'), featuredProductController.updateFeaturedProduct);
+router.delete('/:id', protect, authorize('admin'), featuredProductController.deleteFeaturedProduct);
 
 module.exports = router;

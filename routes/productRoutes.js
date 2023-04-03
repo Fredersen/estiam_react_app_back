@@ -1,12 +1,13 @@
 const express = require('express');
 const productController = require('../controllers/productController');
+const {protect, authorize} = require("../controllers/authController");
 
 const router = express.Router();
 
-router.post('/', productController.createProduct);
+router.post('/', protect, authorize('admin'), productController.createProduct);
 router.get('/', productController.getProducts);
 router.get('/:id', productController.getProduct);
-router.put('/:id', productController.updateProduct);
-router.delete('/:id', productController.deleteProduct);
+router.put('/:id', protect, authorize('admin'), productController.updateProduct);
+router.delete('/:id', protect, authorize('admin'), productController.deleteProduct);
 
 module.exports = router;
