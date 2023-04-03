@@ -11,7 +11,7 @@ exports.createOrder = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate('address').exec();
+        const orders = await Order.find().populate('address').populate('orderDetails').populate({path: 'orderDetails', populate: {path: 'product'}}).exec();
         res.status(200).json({ success: true, data: orders });
     } catch (error) {
         res.status(404).json({ success: false, message: error.message });
@@ -31,6 +31,21 @@ exports.getOrder = async (req, res) => {
 exports.getOrderByServiceId = async (req, res) => {
     try {
         const order = await Order.find({ stripeSessionId: req.params.id })
+            .populate('address').populate({
+                path: 'orderDetails',
+                populate: {
+                    path: 'product'
+                }
+            }).exec();
+        res.status(200).json({ success: true, data: order });
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message });
+    }
+}
+
+exports.getOrderByUserId = async (req, res) => {
+    try {
+        const order = await Order.find({ user: req.params.id })
             .populate('address').populate({
                 path: 'orderDetails',
                 populate: {

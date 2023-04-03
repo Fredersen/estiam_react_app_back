@@ -27,6 +27,15 @@ exports.getCategory = async (req, res) => {
     }
 }
 
+exports.getCategoryBySlug = async (req, res) => {
+    try {
+        const category = await Category.findOne({ slug: req.params.slug });
+        res.status(200).json({ success: true, data: category });
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message });
+    }
+}
+
 exports.updateCategory = async (req, res) => {
     try {
         const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
