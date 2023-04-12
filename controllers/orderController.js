@@ -60,7 +60,8 @@ exports.getOrderByUserId = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
     try {
-        const order = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        console.log('Updating order with data:', req.body); // Ajoutez cette ligne
+        const order = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('address').populate('orderDetails').populate({path: 'orderDetails', populate: {path: 'product'}}).exec();
         if (!order) {
             res.status(404).json({ success: false, message: 'Order not found' });
         } else {

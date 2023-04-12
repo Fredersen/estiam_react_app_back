@@ -5,7 +5,6 @@ exports.createOrderDetail = async (req, res) => {
     try {
         const newOrderDetail = await OrderDetail.create(req.body);
         const order = await Order.findById(req.body.order);
-        console.log(order);
         order.orderDetails.push(newOrderDetail._id);
         await order.save();
         res.status(201).json({ success: true, data: newOrderDetail });
