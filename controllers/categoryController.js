@@ -1,7 +1,8 @@
 const Category = require('../models/categoryModel');
 
 exports.createCategory = async (req, res) => {
-    try {toggleLogin
+    try {
+        req.body.slug = req.body.name.toLowerCase().split(' ').join('-');
         const newCategory = await Category.create(req.body);
         res.status(201).json({ success: true, data: newCategory });
     } catch (error) {
@@ -38,6 +39,7 @@ exports.getCategoryBySlug = async (req, res) => {
 
 exports.updateCategory = async (req, res) => {
     try {
+        req.body.slug = req.body.name.toLowerCase().split(' ').join('-');
         const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!category) {
             res.status(404).json({ success: false, message: 'Category not found' });

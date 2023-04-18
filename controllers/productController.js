@@ -23,15 +23,13 @@ exports.getProducts = async (req, res) => {
     try {
         const categorySlug = req.query.category;
         let products;
-
         if (categorySlug) {
-            const category = await Category.findOne({ slug: categorySlug, isDeleted: false });
-
+            const category = await Category.findOne({ slug: categorySlug });
             if (!category) {
                 return res.status(404).json({ success: false, message: "Category not found" });
             }
 
-            products = await Product.find({ category: category._id });
+            products = await Product.find({ category: category._id, isDeleted: false });
         } else {
             products = await Product.find({ isDeleted: false });
         }
