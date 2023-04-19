@@ -9,7 +9,8 @@ const addressRoutes = require('./routes/addressRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const orderDetailRoutes = require('./routes/orderDetailRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-
+const carouselRoutes = require('./routes/carouselRoutes');
+const bodyParser = require("body-parser");
 
 const cors = require('cors');
 
@@ -34,6 +35,8 @@ mongoose.connect(mongodbURI, {
 });
 
 // Middleware pour parser les requêtes JSON
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json());
 
 // Routes
@@ -46,6 +49,7 @@ app.use('/api/address', addressRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/order-details', orderDetailRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/carousel', carouselRoutes);
 
 // Server
 app.listen(port, hostname, () => {

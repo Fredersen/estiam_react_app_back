@@ -69,7 +69,6 @@ exports.deleteProduct = async (req, res) => {
         }
 
         const featuredProducts = await FeaturedProduct.find({ products: deletedProduct._id });
-        console.log(featuredProducts);
         for (const featuredProduct of featuredProducts) {
             featuredProduct.products = featuredProduct.products.filter(productId => productId.toString() !== deletedProduct._id.toString());
             await featuredProduct.save();
