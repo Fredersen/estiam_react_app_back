@@ -3,7 +3,6 @@ const Order = require('../models/orderModel');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.handlePayment = async (req, res) => {
-    console.log(req.params.orderId);
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: req.body,
