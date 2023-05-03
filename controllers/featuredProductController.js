@@ -40,6 +40,44 @@ exports.updateFeaturedProduct = async (req, res) => {
     }
 }
 
+exports.removeProductFromFeaturedProduct = async (req, res) => {
+    try {
+        const featuredProduct = await FeaturedProduct.findById(req.params.id);
+
+        if (!featuredProduct) {
+            res.status(404).json({ success: false, message: 'Featured product not found' });
+        } else {
+            featuredProduct.products = featuredProduct.products.filter(
+                (product) => product.toString() !== req.params.productId
+            );
+
+            await featuredProduct.save();
+
+            res.status(200).json({ success: true, data: featuredProduct });
+        }
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.addProductToFeaturedProduct = async (req, res) => {
+    try {
+        const featuredProduct = await FeaturedProduct.findById(req.params.id);
+
+        if (!featuredProduct) {
+            res.status(404).json({ success: false, message: 'Featured product not found' });
+        } else {
+            featuredProduct.products.push(req.params.productId);
+
+            await featuredProduct.save();
+
+            res.status(200).json({ success: true, data: featuredProduct });
+        }
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+}
+
 exports.deleteFeaturedProduct = async (req, res) => {
     try {
         const featuredProduct = await FeaturedProduct.findByIdAndDelete(req.params.id);
