@@ -24,7 +24,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://estiam-ecommerce-back-api.onrender.com'],
+    origin: ['http://localhost:3000', 'https://estiam-ecommerce-front.onrender.com'],
     optionsSuccessStatus: 200,
 };
 
