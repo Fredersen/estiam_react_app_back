@@ -22,7 +22,13 @@ const mongodbURI = process.env.MONGODB_URI;
 
 const app = express();
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://estiam-ecommerce-back-api.onrender.com'],
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 // Connect to MongoDB
 mongoose.connect(mongodbURI, {
