@@ -10,6 +10,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const orderDetailRoutes = require('./routes/orderDetailRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const carouselRoutes = require('./routes/carouselRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 const bodyParser = require("body-parser");
 
 const cors = require('cors');
@@ -24,7 +25,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://estiam-ecommerce-front.onrender.com'],
+    origin: '*',
     optionsSuccessStatus: 200,
 };
 
@@ -56,6 +57,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/order-details', orderDetailRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/carousel', carouselRoutes);
+app.use('/api/v1/images', imageRoutes);
 
 // Server
 app.listen(port, hostname, () => {
